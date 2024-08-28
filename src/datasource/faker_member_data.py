@@ -2,7 +2,7 @@ import csv
 import os
 import shutil
 
-from mimesis import Address, Person
+from mimesis import Address, Datetime, Person
 from pyspark.sql import DataFrame
 
 from src.libs.base.datasource import BaseDataSource
@@ -30,6 +30,7 @@ class FakerMemberData(BaseDataSource):
 
         mimesis_person = Person()
         mimesis_address = Address()
+        mimesis_datetime = Datetime()
 
         size_in_bytes = size_in_mb * 1024 * 1024  # Convert MB to bytes
         file_path = f"{self.base_dir}/{self.file_name}"
@@ -48,7 +49,7 @@ class FakerMemberData(BaseDataSource):
                     mimesis_person.first_name(),
                     mimesis_person.last_name(),
                     address,
-                    mimesis_person.birthdate(),
+                    mimesis_datetime.date(),
                 ]
                 csvfile.writerow(data)
                 if file.tell() > size_in_bytes:

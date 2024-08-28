@@ -18,4 +18,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 
 RUN make install
 
-ENTRYPOINT ["python", "run.py", "-job" "generate_and_mask_csv_file"]
+CMD ["python", "run.py", "-job", "generate_and_mask_csv_file"]
