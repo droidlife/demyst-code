@@ -1,0 +1,16 @@
+[MESSAGES CONTROL]
+disable=
+    missing-class-docstring,
+    missing-function-docstring,
+    missing-module-docstring,
+    disallowed-name,
+    too-few-public-methods,
+    line-too-long
+
+
+[FORMAT]
+# Good variable names which should always be accepted, separated by a comma
+good-names=c, df  # context for tasks, very common for dataframe
+
+[MAIN]
+ignore-paths=^migrations/.*
