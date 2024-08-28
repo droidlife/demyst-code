@@ -25,19 +25,17 @@ install-dev: ## install pip requirements for the local development
 	pip install -r requirements.txt
 	pip install -r requirements_dev.txt
 format: ## format code using black
-	black *.py app/*.py
+	black *.py src/*.py
 lint: ## linting code using pylint
-	pylint app
+	pylint src
 test: ## running pytest
 	pytest -v -s
 run-coverage-test: ## generate test coverage report
-	coverage run --source=app --module pytest --verbose tests && coverage report
+	coverage run --source=src --module pytest --verbose tests && coverage report
 	coverage report --fail-under=$(COVERAGE_THRESHOLD)
 build: ## build docker container for deployment
 	@docker build -t $(NAME) --build-arg FLASK_ENV=$(FLASK_ENV) --build-arg SQLALCHEMY_DATABASE_URI=$(SQLALCHEMY_DATABASE_URI) \
 	--build-arg SECRET_API_KEY=$(SECRET_API_KEY) --build-arg COMMIT_SHA=$(COMMIT_HASH) \
 	--build-arg BUILD_NUMBER=$(BUILD_NUMBER) .
-run: ## running production grade gunicorn server. Args: PORT={},WORKERS={}. Default: PORT=5000,WORKERS=2
+run: ## running the job Args: JOB_NAME={}
 	gunicorn -b 0.0.0.0:$(PORT) -w $(WORKERS) 'run:app'
-dev-run: ## Run flask development server on port. Args: PORT={}. Default: PORT=5000
-	python3 run.py -p $(PORT)

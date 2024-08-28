@@ -7,7 +7,15 @@ FROM openjdk:${OPENJDK_VERSION}-${IMAGE_VARIANT}
 
 COPY --from=py3 / /
 
+COPY . /code
+WORKDIR /code
+
 ARG PYSPARK_VERSION=3.2.0
 RUN pip --no-cache-dir install pyspark==${PYSPARK_VERSION}
 
-ENTRYPOINT ["python"]
+# Some of the dependencies needed for the env to be updated
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential
+
+RUN make install
+
+ENTRYPOINT ["python", "run.py", "-job" "generate_and_mask_csv_file"]
