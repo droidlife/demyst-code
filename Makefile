@@ -6,15 +6,12 @@
 ## the Makefile.
 ## ----------------------------------------------------------------------
 
-NAME ?= flask-app
-WORKERS ?= 2
-PORT ?= 5000
+NAME ?= demyst
 COVERAGE_THRESHOLD ?= 80
 COMMIT_HASH ?= $(shell git rev-parse --verify HEAD)
-SECRET_API_KEY ?= my-secret-api-key
-FLASK_ENV ?= local
-SQLALCHEMY_DATABASE_URI ?= sqlite:///app.db
+ENVIRONMENT ?= local
 BUILD_NUMBER ?= 1
+FILE_SIZE_IN_MB ?= 1
 
 
 help:
@@ -34,8 +31,6 @@ run-coverage-test: ## generate test coverage report
 	coverage run --source=src --module pytest --verbose tests && coverage report
 	coverage report --fail-under=$(COVERAGE_THRESHOLD)
 build: ## build docker container for deployment
-	@docker build -t $(NAME) --build-arg FLASK_ENV=$(FLASK_ENV) --build-arg SQLALCHEMY_DATABASE_URI=$(SQLALCHEMY_DATABASE_URI) \
-	--build-arg SECRET_API_KEY=$(SECRET_API_KEY) --build-arg COMMIT_SHA=$(COMMIT_HASH) \
-	--build-arg BUILD_NUMBER=$(BUILD_NUMBER) .
-run: ## running the job Args: JOB_NAME={}
-	gunicorn -b 0.0.0.0:$(PORT) -w $(WORKERS) 'run:app'
+	@docker build -t $(NAME) --build-arg ENVIRONMENT=$(ENVIRONMENT) .
+generate_and_mask_csv_file: ## running the job generate_and_mask_csv_file: Args FILE_SIZE_IN_MB={}
+	python3 run.py -job generate_and_mask_csv_file -args file_size_in_mb=$(FILE_SIZE_IN_MB)

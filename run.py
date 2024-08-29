@@ -12,15 +12,31 @@ parser.add_argument(
     help="select the job name to run",
     metavar="FILE",
 )
+parser.add_argument(
+    "-args",
+    "--arguments",
+    dest="arguments",
+    action="append",
+    nargs="+",
+    help="select the job name to run",
+    metavar="FILE",
+)
 
 args = parser.parse_args()
 
 job_name = args.job_name
 
+kwargs = {}
+if args.arguments:
+    kwargs = {
+        argument[0].split("=")[0]: argument[0].split("=")[1]
+        for argument in args.arguments
+    }
+
 if __name__ == "__main__":
     if job_name is None:
         raise ValueError(
-            "No Pipeline name found. Please specify pipeline name by --pipeline=<name>"
+            "No Job name found. Please specify job name by --job_name=<name>"
         )
     if job_name not in JobSource.__members__:
         raise ValueError(
@@ -28,4 +44,4 @@ if __name__ == "__main__":
             list(JobSource.__members__.keys()),
         )
 
-    JobSource[job_name].value().run()
+    JobSource[job_name].value().run(**kwargs)

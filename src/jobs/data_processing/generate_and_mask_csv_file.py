@@ -19,6 +19,7 @@ class GenerateAndMaskCSVFile(BaseJob):
         return masked_df
 
     def run(self, file_size_in_mb: int = 1):
+        file_size_in_mb = float(file_size_in_mb)
         faker_member_data = FakerMemberData(base_dir=self.config.BASE_DIR)
 
         self.log.info("Generating file of %s mb", file_size_in_mb)
