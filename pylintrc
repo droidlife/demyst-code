@@ -13,4 +13,4 @@ disable=
 good-names=c, df  # context for tasks, very common for dataframe
 
 [MAIN]
-ignore-paths=^migrations/.*
+ignore-paths=^tests/.*

@@ -18,7 +18,10 @@ class GenerateAndMaskCSVFile(BaseJob):
         )
         return masked_df
 
-    def run(self, file_size_in_mb: int = 1):
+    def clean_up(self):
+        FakerMemberData(base_dir=self.config.BASE_DIR).clean_up()
+
+    def get_faker_member_data_df(self, file_size_in_mb: int = 1) -> DataFrame:
         file_size_in_mb = float(file_size_in_mb)
         faker_member_data = FakerMemberData(base_dir=self.config.BASE_DIR)
 
@@ -26,6 +29,12 @@ class GenerateAndMaskCSVFile(BaseJob):
         faker_member_data.generate_csv_file(size_in_mb=file_size_in_mb)
 
         df = faker_member_data.get_df()
+
+        return df
+
+    def run(self, file_size_in_mb: int = 1) -> DataFrame:
+        file_size_in_mb = float(file_size_in_mb)
+        df = self.get_faker_member_data_df(file_size_in_mb=file_size_in_mb)
 
         self.log.info("Dataframe before masking")
         self.log.info(df.show(10, truncate=False))
@@ -35,4 +44,6 @@ class GenerateAndMaskCSVFile(BaseJob):
         self.log.info("Dataframe after masking")
         self.log.info(masked_df.show(10, truncate=False))
 
-        faker_member_data.clean_up()
+        self.clean_up()
+
+        return masked_df

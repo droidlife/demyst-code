@@ -29,3 +29,4 @@ dist/
 site/*
 instance/*
 files/
+.vscode/
