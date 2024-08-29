@@ -27,7 +27,11 @@ class FakerMemberData(BaseDataSource):
         return df
 
     def generate_csv_file(self: str, size_in_mb: int):
+        """Generate csv file using fake data
 
+        Args:
+            size_in_mb (int): the size of the file in mb
+        """
         mimesis_person = Person()
         mimesis_address = Address()
         mimesis_datetime = Datetime()

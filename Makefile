@@ -8,7 +8,6 @@
 
 NAME ?= demyst
 COVERAGE_THRESHOLD ?= 80
-COMMIT_HASH ?= $(shell git rev-parse --verify HEAD)
 ENVIRONMENT ?= local
 BUILD_NUMBER ?= 1
 FILE_SIZE_IN_MB ?= 1
@@ -32,5 +31,7 @@ run-coverage-test: ## generate test coverage report
 	coverage report --fail-under=$(COVERAGE_THRESHOLD)
 build: ## build docker container for deployment
 	@docker build -t $(NAME) --build-arg ENVIRONMENT=$(ENVIRONMENT) .
+run: ## run docker container
+	docker run $(NAME)
 generate_and_mask_csv_file: ## running the job generate_and_mask_csv_file: Args FILE_SIZE_IN_MB={}
 	python3 run.py -job generate_and_mask_csv_file -args file_size_in_mb=$(FILE_SIZE_IN_MB)

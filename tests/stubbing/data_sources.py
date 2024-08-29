@@ -1,3 +1,5 @@
+"""File containing all the datasources stubs"""
+
 import pytest
 from mockito import unstub, when
 

@@ -1,4 +1,5 @@
 # pylint: disable=raising-format-tuple
+"""Entry point for running any job"""
 from argparse import ArgumentParser
 
 from src.jobs import JobSource

@@ -10,6 +10,14 @@ from src.libs.mask import mask_value
 
 class GenerateAndMaskCSVFile(BaseJob):
     def mask_dataframe(self, df: DataFrame) -> DataFrame:
+        """Mask the dataframe to hide PII data
+
+        Args:
+            df (DataFrame): dataframe that needs to be masked
+
+        Returns:
+            DataFrame: masked dataframe
+        """
         mask_value_udf = F.udf(mask_value, T.StringType())
         masked_df = (
             df.withColumn(CN.first_name, mask_value_udf(F.col(CN.first_name)))
@@ -22,6 +30,14 @@ class GenerateAndMaskCSVFile(BaseJob):
         FakerMemberData(base_dir=self.config.BASE_DIR).clean_up()
 
     def get_faker_member_data_df(self, file_size_in_mb: int = 1) -> DataFrame:
+        """Generate csv file containing fake data and read the file into a spark dataframe
+
+        Args:
+            file_size_in_mb (int, optional): file size in mb. Defaults to 1.
+
+        Returns:
+            DataFrame: fake data dataframe
+        """
         file_size_in_mb = float(file_size_in_mb)
         faker_member_data = FakerMemberData(base_dir=self.config.BASE_DIR)
 
