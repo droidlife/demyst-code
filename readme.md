@@ -229,7 +229,7 @@ docker run <image-name> <make-file-command>
 - **Delete File**: Safely delete the CSV file after processing is complete.
 
 **Arguments**: 
-FILE_SIZE_IN_MB: Default value = 1
+FILE_SIZE_IN_MB (The size of the file that should be created using fake data): Default value = 1
 ```sh
 make generate_and_mask_csv_file FILE_SIZE_IN_MB=0.2
 ```
@@ -239,4 +239,9 @@ or
 file_size_in_mb: Default value = 0.2
 ```sh
 python3 run.py -job generate_and_mask_csv_file -args file_size_in_mb=0.2
+```
+or
+
+```sh
+docker run <image-name> generate_and_mask_csv_file FILE_SIZE_IN_MB=0.2
 ```
