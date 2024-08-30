@@ -10,7 +10,7 @@ In this readme
 - [Setup and Installation](#setup-and-installation)
 - [Testing](#testing)
 - [Makefile Commands](#makefile-commands)
-- [Future Improvements](#future-improvements)
+- [Jobs](#jobs)
 
 ## Project Structure
 
@@ -207,4 +207,24 @@ You can customize the behavior of some commands using the following arguments:
 - `COVERAGE_THRESHOLD`: Minimum coverage percentage for tests (default: `80`)
 - `ENVIRONMENT`: Environment (default: `local`)
 
-## Future Improvements
+## Jobs
+
+### 1. Generate and Mask CSV File
+
+- **Generate CSV File**: Create a CSV file containing the required data.
+- **Read with Spark**: Load the CSV file using Apache Spark for processing.
+- **Mask Columns**: Apply masking to sensitive columns as needed to protect data.
+- **Delete File**: Safely delete the CSV file after processing is complete.
+
+**Arguments**: 
+FILE_SIZE_IN_MB: Default value = 1
+```sh
+make generate_and_mask_csv_file FILE_SIZE_IN_MB=0.2
+```
+
+or
+
+file_size_in_mb: Default value = 0.2
+```sh
+python3 run.py -job generate_and_mask_csv_file -args file_size_in_mb=0.2
+```
