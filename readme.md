@@ -10,6 +10,7 @@ In this readme
 - [Setup and Installation](#setup-and-installation)
 - [Testing](#testing)
 - [Makefile Commands](#makefile-commands)
+- [Docker](#docker)
 - [Jobs](#jobs)
 
 ## Project Structure
@@ -206,6 +207,17 @@ You can customize the behavior of some commands using the following arguments:
 - `NAME`: The name of the Docker image (default: `demyst`)
 - `COVERAGE_THRESHOLD`: Minimum coverage percentage for tests (default: `80`)
 - `ENVIRONMENT`: Environment (default: `local`)
+
+## Docker
+The code is packaged within a Docker image that includes Spark version 3.2.0. The default job executed when the container runs is **generate_and_mask_csv_file**.
+```sh
+docker run <image-name>
+```
+
+To execute other jobs, use the following command:
+```sh
+docker run <image-name> <make-file-command>
+```
 
 ## Jobs
 
